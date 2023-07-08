@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-junk-code'
+
+
+android {
+    compileSdkVersion 31
+    androidJunkCode {
+        def config = {
+            packageBase = "cn.hx.plugin.ui"
+            packageCount = 30
+            activityCountPerPackage = 30
+            excludeActivityJavaFile = false
+            otherCountPerPackage = 50
+            methodCountPerClass = 20
+            resPrefix = "junk_"
+            drawableCount = 300
+            stringCount = 300
+        }
+        variantConfig {
+            debug config
+            release config
+        }
+    }
+    defaultConfig {
+        applicationId "cn.hx.plugin.junkcode.demo"
+        minSdkVersion 16
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+}
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+}
